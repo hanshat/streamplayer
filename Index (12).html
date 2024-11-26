@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live TV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+    <!-- HLS.js লাইব্রেরি -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <h1>Welcome to Live TV</h1>
+    <p>Now streaming your favorite channel
+    make by Raj</p>
+
+    <!-- লাইভ টিভি প্লেয়ার -->
+    <video id="liveTV" controls autoplay></video>
+
+    <script>
+        // HLS.js ফাংশন ব্যবহার করে ভিডিও প্লে করা
+        const video = document.getElementById('liveTV');
+        const channelURL = 'https://freedishbhai.vercel.app/Discovery_Bengali.m3u8'; // Replace with your channel URL
+        let hls = new Hls();
+
+        if (Hls.isSupported()) {
+            hls.loadSource(channelURL); // স্ট্রিম লোড
+            hls.attachMedia(video); // মিডিয়ার সাথে HLS যুক্ত করা
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = channelURL; // Safari ব্রাউজারের জন্য সরাসরি লোড
+        } else {
+            alert('Your browser does not support HLS streaming.');
+        }
+
+        video.play();
+    </script>
+</body>
+</html>
